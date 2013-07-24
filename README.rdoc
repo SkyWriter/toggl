@@ -11,7 +11,7 @@ Primary developer: Ivan Kasatenko <ivan@uniqsystems.ru>
 Only tested on Redmine 2.3.1 and Ruby 1.9.3.
 
   $ cd /path/to/redmine/plugins
-  $ git clone git://github.com/skywriter/toggl.git
+  $ git clone git://github.com/SkyWriter/toggl.git
   $ RAILS_ENV=production bundle exec rake redmine:plugins:migrate
   $ crontab -e
 
