@@ -1,3 +1,39 @@
-= toggl
+= Redmine Toggl Plugin
 
-Description goes here
+This plugin enables Redmine to fetch Toggl time entries and register them as issues' time entries.
+
+Created by UNIQ Systems LLC (http://uniqsystems.ru/)
+Primary developer: Ivan Kasatenko <ivan@uniqsystems.ru>
+
+== How to setup
+
+Only tested on Redmine 2.3.1 and Ruby 1.9.3.
+
+  $ cd /path/to/redmine/plugins
+  $ git clone git://github.com/skywriter/toggl.git
+  $ RAILS_ENV=production bundle exec rake redmine:plugins:migrate
+  $ crontab -e
+
+Then add the following line to your crontab (schedule may vary, of course):
+
+  59 23 * * * cd /path/to/redmine && RAILS_ENV=production bundle exec rake toggl:update
+
+== How to use
+
+First, go to your Redmine profile and set your Toggl API key.
+
+After that any entry in Toggl marked with a hash and a number goes to the corresponding task in your projects. For example, an entry "Going out with Sarah #1324" of 2.5 hours will add 2.5h to the issue #1324 with the "Going out with Sarah" comment.
+
+You can edit that entry in Redmine or even delete it, it won't be overwritten or repopulated ever again.
+
+Any Toggl records without a hash are skipped.
+
+== Warranties
+
+None, as usual :) It's a quick in-house hack, so don't come crying if it ever breaks or even kills your puppy with its gross gears.
+
+It's unlikely, but you have been warned.
+
+== License
+
+This plugin is released under the [MIT License](http://www.opensource.org/licenses/MIT).
