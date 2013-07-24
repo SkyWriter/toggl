@@ -1,5 +1,5 @@
 # Responsible for syncing Toggl with Redmine
-class TogglRegistrationService
+class TogglTimeRegistrationService
   
   def initialize(user, toggl_api_service)
     @user = user
