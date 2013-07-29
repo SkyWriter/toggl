@@ -26,7 +26,8 @@ protected
 
   def create_time_entry(user, toggl_entry)
     issue = Issue.find(toggl_entry.issue_id)
-    time_entry = TimeEntry.new(:project => issue.project, :issue => issue, :user => user, :spent_on => toggl_entry.started_at, :hours => toggl_entry.duration, :comments => toggl_entry.description)
+    time_entry = TimeEntry.new(:project => issue.project, :issue => issue, :user => user, :spent_on => toggl_entry.started_at, :comments => toggl_entry.description)
+    time_entry.hours = toggl_entry.duration
     time_entry.save!
   end
   
