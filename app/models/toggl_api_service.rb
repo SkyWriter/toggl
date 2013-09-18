@@ -9,7 +9,7 @@ class TogglAPIService
   end
   
   def get_toggl_entries
-    get_latest_toggl_entries_api_response["data"].map { |entry|
+    get_latest_toggl_entries_api_response.map { |entry|
       if entry["description"] =~ /\s*#(\d+)\s*/
         TogglAPIEntry.new(entry["id"],
                           $1.to_i,
@@ -26,7 +26,8 @@ class TogglAPIService
 protected
   
   def get_latest_toggl_entries_api_response
-    uri = URI.parse 'https://www.toggl.com/api/v6/time_entries.json'
+    uri = URI.parse 'https://www.toggl.com/api/v8/time_entries'
+    uri.query = URI.encode_www_form user_agent: 'Redmine Toggl Client'
 
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
