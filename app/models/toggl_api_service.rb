@@ -10,7 +10,7 @@ class TogglAPIService
   
   def get_toggl_entries
     get_latest_toggl_entries_api_response.map { |entry|
-      if entry["description"] =~ /\s*#(\d+)\s*/
+      if entry["description"] =~ /\s*#(\d+)\s*/ && !entry["stop"].nil? && !entry["stop"].empty?
         TogglAPIEntry.new(entry["id"],
                           $1.to_i,
                           Time.parse(entry["start"]),
