@@ -16,8 +16,9 @@ class TogglTimeRegistrationService
       latest_toggl_entries.each do |toggl_entry|
         next if already_loaded_ids.include?(toggl_entry.id)
 
-        create_time_entry(@user, toggl_entry)
-        TogglTimeEntry.register_synced_entry(toggl_entry.id)
+        if create_time_entry(@user, toggl_entry)
+          TogglTimeEntry.register_synced_entry(toggl_entry.id)
+        end
       end
     end
   end
@@ -25,10 +26,15 @@ class TogglTimeRegistrationService
 protected
 
   def create_time_entry(user, toggl_entry)
-    issue = Issue.find(toggl_entry.issue_id)
-    time_entry = TimeEntry.new(:project => issue.project, :issue => issue, :user => user, :spent_on => toggl_entry.started_at, :comments => toggl_entry.description)
-    time_entry.hours = toggl_entry.duration
-    time_entry.save!
+    issue = Issue.find_by_id(toggl_entry.issue_id)
+    if issue
+      time_entry = TimeEntry.new(:project => issue.project, :issue => issue, :user => user, :spent_on => toggl_entry.started_at, :comments => toggl_entry.description)
+      time_entry.hours = toggl_entry.duration
+      time_entry.save
+    else
+      puts "Issue #{toggl_entry.issue_id} has not been found in Redmine. Skipping."
+      false
+    end
   end
   
 end
