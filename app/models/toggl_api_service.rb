@@ -27,7 +27,7 @@ protected
   
   def get_latest_toggl_entries_api_response
     uri = URI.parse 'https://www.toggl.com/api/v8/time_entries'
-    uri.query = URI.encode_www_form user_agent: 'Redmine Toggl Client'
+    uri.query = URI.encode_www_form({ :user_agent => 'Redmine Toggl Client' })
 
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
