@@ -30,6 +30,13 @@ protected
     if issue
       time_entry = TimeEntry.new(:project => issue.project, :issue => issue, :user => user, :spent_on => toggl_entry.started_at, :comments => toggl_entry.description)
       time_entry.hours = toggl_entry.duration
+      if !time_entry.valid?
+        puts "Creating time entry for issue ##{toggl_entry.issue_id} failed."
+        puts "Time entry field values:"
+        puts time_entry.attributes.map { |k, v| "  #{k} = #{v}" }.join("\n")
+        puts "Errors:"
+        puts time_entry.errors.full_messages.map { |m| "  * #{m}"}.join("\n")
+      end
       time_entry.save
     else
       puts "Issue #{toggl_entry.issue_id} has not been found in Redmine. Skipping."
