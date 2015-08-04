@@ -19,7 +19,7 @@ Then add the following line to your crontab (schedule may vary, of course):
 
   59 23 * * * cd /path/to/redmine && RAILS_ENV=production bundle exec rake toggl:update
 
-*IMPORTANT*: You should have default activity set in your Redmine.
+*IMPORTANT*: You should have default activity set in your Redmine. It could be found at http://your.redmine.com/enumerations address under the "Activities" section.
 
 == How to use
 
