@@ -3,14 +3,25 @@ require 'json'
 
 # Responsible for fetching matching Toggl entries
 class TogglAPIService
-  
-  def initialize(toggl_api_key)
+
+  def initialize(toggl_api_key, workspaces)
     @toggl_api_key = toggl_api_key
+    @toggl_workspace = workspaces.split(',').map(&:strip) if workspaces.present?
   end
-  
+
   def get_toggl_entries
-    get_latest_toggl_entries_api_response.map { |entry|
-      if entry["description"] =~ /\s*#(\d+)\s*/ && !entry["stop"].nil? && !entry["stop"].empty?
+    workspace_ids = []
+
+    if @toggl_workspace.present?
+      wid_response = get_latest_toggl_entries_api_response('workspaces')
+      workspace_ids = wid_response.select{|k| @toggl_workspace.include?(k['name'])}.map{|k| k['id']}
+    end
+
+    # if user has setup workspace, use entries for those workspaces. If no workspace is setup, use all
+    get_latest_toggl_entries_api_response('time_entries').map { |entry|
+      if entry["description"] =~ /\s*#(\d+)\s*/ && !entry["stop"].nil? && !entry["stop"].empty? &&
+      (@toggl_workspace.blank? || workspace_ids.include?(entry['wid']))
+
         TogglAPIEntry.new(entry["id"],
                           $1.to_i,
                           Time.parse(entry["start"]),
@@ -22,11 +33,11 @@ class TogglAPIService
       end
     }.compact
   end
-  
+
 protected
-  
-  def get_latest_toggl_entries_api_response
-    uri = URI.parse 'https://www.toggl.com/api/v8/time_entries'
+
+  def get_latest_toggl_entries_api_response(target)
+    uri = URI.parse "https://www.toggl.com/api/v8/#{target}"
     uri.query = URI.encode_www_form({ :user_agent => 'Redmine Toggl Client' })
 
     http = Net::HTTP.new(uri.host, uri.port)
@@ -39,5 +50,5 @@ protected
     res = http.request(req)
     JSON.parse(res.body)
   end
-  
+
 end
