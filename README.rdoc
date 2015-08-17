@@ -24,6 +24,7 @@ Then add the following line to your crontab (schedule may vary, of course):
 == How to use
 
 First, go to your Redmine profile and set your Toggl API key. You can get one at https://www.toggl.com/user/edit.
+If you want to use only some of your Toggl workspaces, you can set them up in Redmine as a comma separated string. To fetch entries from all workspaces, just leave workspace setting empty.
 
 After that any entry in Toggl marked with a hash and a number goes to the corresponding task in your projects. For example, an entry "Going out with Sarah #1324" of 2.5 hours will add 2.5h to the issue #1324 with the "Going out with Sarah" comment.
 
