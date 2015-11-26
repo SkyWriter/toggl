@@ -21,12 +21,18 @@ class TogglAPIService
     get_latest_toggl_entries_api_response('time_entries').map { |entry|
       if entry["description"] =~ /\s*#(\d+)\s*/ && !entry["stop"].nil? && !entry["stop"].empty? &&
       (@toggl_workspace.blank? || workspace_ids.include?(entry['wid']))
+        
+        activity_name = nil
+        if entry.has_key?("tags") and not entry["tags"].empty?
+          activity_name = entry["tags"].first
+        end         
 
         TogglAPIEntry.new(entry["id"],
                           $1.to_i,
                           Time.parse(entry["start"]),
                           entry["duration"].to_f / 3600,
-                          entry["description"].gsub(/\s*#\d+\s*/, '')
+                          entry["description"].gsub(/\s*#\d+\s*/, ''),
+                          activity_name
                           )
       else
         nil
