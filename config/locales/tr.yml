@@ -1,0 +1,11 @@
+# Turkish strings go here for Rails i18n
+tr:
+  label_mail_header: "Toggl-Redmine Eşleşmeyen Girdiler Raporu"
+  label_user: "Kullanıcı"
+  label_date: "Tarih"
+  label_description: "Açıklama"
+  label_duration: "Süre"
+  label_hours: "saat"
+
+  journal_no_description: "Açıklama bilgisi girilmemiş."
+  journal_no_missmatch_entry: "Kullanıcıların eşleşmeyen girdisi bulunamadı."

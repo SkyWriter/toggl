@@ -19,6 +19,12 @@ Then add the following line to your crontab (schedule may vary, of course):
 
   59 23 * * * cd /path/to/redmine && RAILS_ENV=production bundle exec rake toggl:update
 
+If you want report of missmatch redmine-toggl entries sent with email:
+
+  59 23 * * * cd /path/to/redmine && RAILS_ENV=production bundle exec rake toggl:report[24,"en","admin1@redmine.com,admin2@redmine.com"]
+
+First parameter sets time interval (hours), second parameter is language(currently only supports tr and en) and the last parameter sets mail address (you can use multiple e-mail addresses just split them with comma).
+
 *IMPORTANT*: You should have default activity set in your Redmine. It could be found at http://your.redmine.com/enumerations address under the "Activities" section.
 
 == How to use

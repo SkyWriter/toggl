@@ -1,0 +1,18 @@
+Toggl-Redmine Missmatch Report
+<% if @all_users_missmatch_toggl_entries.values.all? {|value| value.blank?} %>
+  <%= l(:journal_no_missmatch_entry) %>
+<% else %>
+  <% @all_users_missmatch_toggl_entries.keys.each do |users| %>
+    <% unless @all_users_missmatch_toggl_entries[users].blank? %>
+    ---------------------------------------------------------
+
+    <%= l(:label_user) %>: <%= users %>
+      <% @all_users_missmatch_toggl_entries[users].each do |entry| %>
+      <%= l(:label_date) %>: <%= entry["started_at"].strftime("%d/%m/%Y %H:%M") %>
+      <%= l(:label_description) %>: <%= entry["description"].blank? ? l(:journal_no_description) : entry["description"] %>
+      <%= l(:label_duration) %>: <%= entry["duration"].to_f.round(2)%> hours
+
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

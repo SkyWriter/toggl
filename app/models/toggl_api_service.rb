@@ -34,6 +34,25 @@ class TogglAPIService
     }.compact
   end
 
+  # Get all user entries with or without # key
+  def get_missmatch_toggl_entries(time_interval)
+    get_latest_toggl_entries_api_response('time_entries').map { |entry|
+      if !entry['stop'].blank? &&
+      time_interval < DateTime.parse(entry['start']) &&
+      !TogglTimeEntry.where(id: entry['id']).any?
+
+      TogglAPIEntry.new(entry["id"],
+                        $1.to_i,
+                        Time.parse(entry["start"]),
+                        entry["duration"].to_f / 3600,
+                        entry["description"]
+                        )
+      else
+        nil
+      end
+    }.compact
+  end
+
 protected
 
   def get_latest_toggl_entries_api_response(target)

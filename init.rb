@@ -6,3 +6,14 @@ Redmine::Plugin.register :toggl do
   url 'http://github.com/skywriter/toggl'
   author_url 'http://uniqsystems.ru/'
 end
+
+Rails.configuration.to_prepare do
+  [
+    [Mailer, Toggl::Patches::MailerPatch]
+  ].each do |classname, modulename|
+    unless classname.included_modules.include?(modulename)
+      classname.send(:include, modulename)
+    end
+  end
+
+end

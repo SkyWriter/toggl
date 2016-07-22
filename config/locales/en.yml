@@ -1,3 +1,11 @@
 # English strings go here for Rails i18n
 en:
-  # my_label: "My label"
+  label_mail_header: "Toggl-Redmine Missmatch Report"
+  label_user: "User"
+  label_date: "Date"
+  label_description: "Description"
+  label_duration: "Duration"
+  label_hours: "hours"
+
+  journal_no_description: "There is no descripton."
+  journal_no_missmatch_entry: "There isn't any missmatch entry for users."
