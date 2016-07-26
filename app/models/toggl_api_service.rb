@@ -48,7 +48,12 @@ protected
     req.basic_auth @toggl_api_key, 'api_token'
 
     res = http.request(req)
-    JSON.parse(res.body)
+    
+    if res.code.eql? "200"
+      JSON.parse(res.body)
+    else
+      []
+    end
   end
 
 end
