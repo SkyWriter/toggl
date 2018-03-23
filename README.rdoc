@@ -2,9 +2,7 @@
 
 This plugin enables Redmine to fetch Toggl time entries and register them as issues' time entries.
 
-Created by UNIQ Systems LLC (http://uniqsystems.ru/)
-
-Primary developer: Ivan Kasatenko <ivan@uniqsystems.ru>
+Developed by: Ivan Kasatenko <sky.31338@gmail.com>
 
 == How to setup
 
