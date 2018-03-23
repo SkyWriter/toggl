@@ -1,0 +1,20 @@
+<h3><%=l(:label_mail_header) %></h3>
+<% if @all_users_missmatch_toggl_entries.values.all? {|value| value.blank?} %>
+  <p>
+    <%= l(:journal_no_missmatch_entry) %>
+  </p>
+<% else %>
+  <% @all_users_missmatch_toggl_entries.keys.each do |users| %>
+    <% unless @all_users_missmatch_toggl_entries[users].blank? %>
+      <hr>
+      <b><%= l(:label_user) %>: <%= users %></b> <br>
+      <% @all_users_missmatch_toggl_entries[users].each do |entry| %>
+        <p>
+          <b><%= l(:label_date) %>: </b><%= entry["started_at"].strftime("%d/%m/%Y %H:%M") %><br>
+          <b><%= l(:label_description) %>: </b><%= entry["description"].blank? ? l(:journal_no_description) : entry["description"] %><br>
+          <b><%= l(:label_duration) %>: </b><%= entry["duration"].to_f.round(2)%> <%= l(:label_hours) %><br>
+        </p>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
