@@ -6,7 +6,17 @@ Developed by: Ivan Kasatenko <sky.31338@gmail.com>
 
 == How to setup
 
-Only tested on Redmine 2.3.1 and Ruby 1.9.3.
+Tested on Redmines:
+
+* 2.3.1
+* 3.1.1
+
+Tested on Rubies:
+
+* 1.9.3
+* 2.2.3
+
+So, here's the gist of the setup process:
 
   $ cd /path/to/redmine/plugins
   $ git clone git://github.com/SkyWriter/toggl.git
