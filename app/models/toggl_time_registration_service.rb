@@ -30,6 +30,12 @@ protected
     if issue
       time_entry = TimeEntry.new(:project => issue.project, :issue => issue, :user => user, :spent_on => toggl_entry.started_at, :comments => toggl_entry.description)
       time_entry.hours = toggl_entry.duration
+      unless toggl_entry.activity_name.nil?
+        activity_id = TimeEntryActivity.where(name: toggl_entry.activity_name).pluck(:id).first
+        unless activity_id.nil?
+          time_entry.activity_id = activity_id
+        end
+      end
       if !time_entry.valid?
         puts "Creating time entry for issue ##{toggl_entry.issue_id} failed."
         puts "Time entry field values:"
