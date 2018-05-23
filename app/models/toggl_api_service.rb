@@ -19,7 +19,7 @@ class TogglAPIService
 
     # if user has setup workspace, use entries for those workspaces. If no workspace is setup, use all
     get_latest_toggl_entries_api_response('time_entries').map { |entry|
-      if entry["description"] =~ /\s*#(\d+)\s*/ && !entry["stop"].nil? && !entry["stop"].empty? &&
+      if entry["description"] =~ /\s*#(\d+)\s*/ && entry["duration"] > 0 &&
       (@toggl_workspace.blank? || workspace_ids.include?(entry['wid']))
 
         TogglAPIEntry.new(entry["id"],
