@@ -1,4 +1,4 @@
-class CreateApiKeyField < ActiveRecord::Migration
+class CreateApiKeyField < Rails.version < '5.1' ? ActiveRecord::Migration : ActiveRecord::Migration[4.2]
 
   def up
     custom_field = CustomField.new_subclass_instance('UserCustomField', {
