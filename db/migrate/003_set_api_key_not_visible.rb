@@ -1,4 +1,4 @@
-class SetApiKeyNotVisible < ActiveRecord::Migration
+class SetApiKeyNotVisible < Rails.version < '5.1' ? ActiveRecord::Migration : ActiveRecord::Migration[4.2]
 
   def up
     custom_field = CustomField.find_by_name('Toggl API Key')
