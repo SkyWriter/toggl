@@ -1,4 +1,4 @@
-class CreateApiKeyField < ActiveRecord::Migration
+class CreateApiKeyField < Rails.version < '5.1' ? ActiveRecord::Migration : ActiveRecord::Migration[4.2]
 
   def up
     custom_field = CustomField.new_subclass_instance('UserCustomField', {
@@ -15,7 +15,7 @@ class CreateApiKeyField < ActiveRecord::Migration
     })
     custom_field.save!
   end
-  
+
   def down
     CustomField.find_by_name('Toggl API Key').destroy
   end
