@@ -37,7 +37,8 @@ class TogglAPIService
 protected
 
   def get_latest_toggl_entries_api_response(target)
-    uri = URI.parse "https://www.toggl.com/api/v8/#{target}"
+    # https://github.com/toggl/toggl_api_docs/blob/master/toggl_api.md
+    uri = URI.parse "https://api.track.toggl.com/api/v8/#{target}"
     uri.query = URI.encode_www_form({ :user_agent => 'Redmine Toggl Client' })
 
     http = Net::HTTP.new(uri.host, uri.port)
@@ -48,7 +49,7 @@ protected
     req.basic_auth @toggl_api_key, 'api_token'
 
     res = http.request(req)
-    
+
     if res.code.eql? "200"
       JSON.parse(res.body)
     else
